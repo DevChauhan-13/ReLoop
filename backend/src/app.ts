@@ -64,6 +64,17 @@ export const createApp = (): Express => {
   app.use(cookieParser());
   app.use(mongoSanitize());
 
+  app.get('/', (_req, res) => {
+    res.json({
+      name: 'LoopLedger API',
+      status: 'ok',
+      frontend: env.CLIENT_URL,
+      health: '/health',
+      readiness: '/ready',
+      api: '/api/v1',
+    });
+  });
+
   // Global Rate Limiting
   const limiter = rateLimit({
     windowMs: 15 * 60 * 1000,

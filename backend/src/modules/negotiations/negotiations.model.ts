@@ -3,7 +3,8 @@ import mongoose, { Schema, Document } from 'mongoose';
 export type NegotiationStatus = 'proposed' | 'counter_offered' | 'accepted' | 'rejected';
 
 export interface INegotiation extends Document {
-  materialId: mongoose.Types.ObjectId;
+  materialId?: mongoose.Types.ObjectId;
+  listingId?: mongoose.Types.ObjectId;
   buyerOrganizationId: mongoose.Types.ObjectId;
   sellerOrganizationId: mongoose.Types.ObjectId;
   offeredPricePerUnit: number;
@@ -18,7 +19,8 @@ export interface INegotiation extends Document {
 
 const NegotiationSchema = new Schema<INegotiation>(
   {
-    materialId: { type: Schema.Types.ObjectId, ref: 'Material', required: true, index: true },
+    materialId: { type: Schema.Types.ObjectId, ref: 'Material', required: false, index: true },
+    listingId: { type: Schema.Types.ObjectId, ref: 'Listing', required: false, index: true },
     buyerOrganizationId: { type: Schema.Types.ObjectId, ref: 'Organization', required: true, index: true },
     sellerOrganizationId: { type: Schema.Types.ObjectId, ref: 'Organization', required: true, index: true },
     offeredPricePerUnit: { type: Number, required: true },
